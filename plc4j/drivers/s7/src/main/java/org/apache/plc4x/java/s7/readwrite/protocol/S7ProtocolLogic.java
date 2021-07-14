@@ -623,6 +623,11 @@ public class S7ProtocolLogic extends Plc4xProtocolBase<TPKTPacket> {
             numElements = numElements * transportSize.getSizeInBytes();
             transportSize = TransportSize.BYTE;
         }
+        if ((transportSize == transportSize.LREAL) ||
+             (transportSize == transportSize.ULINT) ||
+             (transportSize == transportSize.LWORD)) {
+            numElements = numElements * 2;
+        }
         if(transportSize == TransportSize.STRING) {
             transportSize = TransportSize.CHAR;
             int stringLength = (s7Field instanceof S7StringField) ? ((S7StringField) s7Field).getStringLength() : 254;
